@@ -6,20 +6,31 @@ Notice:
 	mootools-more version 1.3.0.1
 
 How To Use:
-        TextField<String> fixedMask = new TextField<String>("change-mask-input");
-        fixedMask.add(new MeioMaskBehavior(MeioMaskType.Fixed,"{mask: ':99:99:', autoTab: true}"));
-        add(fixedMask);
+	package br.com.digilabs.meiomask.examples;
 
-        TextField<String> fixedPhone = new TextField<String>("fixed-phone");
-        fixedPhone.add(MeioMaskType.FixedPhone.getBehavior());
-        add(fixedPhone);
+	import br.com.digilabs.wicket.component.meiomask.MeioMaskField;
+	import br.com.digilabs.wicket.component.meiomask.MeioMaskType;
+	import org.apache.wicket.PageParameters;
+	import org.apache.wicket.markup.html.WebPage;
 
-        TextField<String> fixedPhoneUs = new TextField<String>("fixed-phone-us");
-        fixedPhoneUs.add(MeioMaskType.FixedPhoneUs.getBehavior());
-        add(fixedPhoneUs);
+	/**
+	 * Homepage
+	 */
+	public class HomePage extends WebPage {
 
-        TextField<String> fixedCpf = new TextField<String>("fixed-cpf");
-        fixedCpf.add(MeioMaskType.FixedCpf.getBehavior());
-        add(fixedCpf);
+	    private static final long serialVersionUID = 1L;
+
+	    public HomePage(final PageParameters parameters) {
+
+		add(new MeioMaskField("change-mask-input",MeioMaskType.Fixed,"{mask: ':99:99:', autoTab: true}"));
+
+		add(new MeioMaskField("fixed-phone",MeioMaskType.FixedPhone));
+		
+		add(new MeioMaskField("fixed-phone-us",MeioMaskType.FixedPhoneUs));
+
+		add(new MeioMaskField("fixed-cpf",MeioMaskType.FixedCpf));
+
+	    }
+	}
 
 
