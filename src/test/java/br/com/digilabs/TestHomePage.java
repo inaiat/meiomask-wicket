@@ -1,5 +1,7 @@
 package br.com.digilabs;
 
+import br.com.digilabs.meiomask.examples.HomePage;
+import br.com.digilabs.meiomask.examples.WicketApplication;
 import junit.framework.TestCase;
 import org.apache.wicket.util.tester.WicketTester;
 

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2010 henrique.
+ *  Copyright 2010 inaiat.
  * 
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package br.com.digilabs.wicket.component.meiomask;
 
 /**
  *
- * @author henrique
+ * @author inaiat
  */
 public enum MeioMaskType {
 
