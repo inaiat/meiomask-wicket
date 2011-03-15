@@ -9,25 +9,28 @@
         </style>
     </head>
     <body>
+        <p>
+            <span wicket:id="feedBack"></span>
+        </p>
         <h1>Fixed</h1>
         <div class="content">
-            <form action="index_submit" method="get">
+            <form wicket:id="form" action="#">
                 <fieldset>
                     <label>fixed Mask:</label>
-                    <input wicket:id="change-mask-input" style="width: 200px" type="text" />
+                    <input wicket:id="fixed" style="width: 200px" type="text" />
                 </fieldset>
                 <a id="change-mask" title="change mask" href="#">change mask</a>
                 <fieldset>
                     <label>fixed.phone Mask:</label>
-                    <input style="width: 200px" type="text" wicket:id="fixed-phone" />
+                    <input style="width: 200px" type="text" wicket:id="fixedPhone" />
                 </fieldset>
                 <fieldset>
                     <label>fixed.phone-us Mask:</label>
-                    <input style="width: 200px" type="text" wicket:id="fixed-phone-us" />
+                    <input style="width: 200px" type="text" wicket:id="fixedPhoneUs" />
                 </fieldset>
                 <fieldset>
                     <label>fixed.cpf Mask:</label>
-                    <input style="width: 200px" type="text" wicket:id="fixed-cpf" />
+                    <input style="width: 200px" type="text" wicket:id="fixedCpf" />
                 </fieldset>
                 <fieldset>
                     <label>fixed.cnpj Mask:</label>
@@ -61,6 +64,9 @@
                     <label>fixed.cc Mask:</label>
                     <input style="width: 200px" type="text" data-meiomask="fixed.cc" />
                 </fieldset>
+                <fieldset>
+                    <input type="submit" value="Send" />
+                </fieldset>
             </form>
         </div>
 
@@ -86,7 +92,7 @@
                 <fieldset>
                     <label>reverse.dollar Mask:</label>
                     <input style="width: 200px" type="text" data-meiomask="reverse.dollar" />
-                </fieldset>
+                </fieldset>                
             </form>
         </div>
 

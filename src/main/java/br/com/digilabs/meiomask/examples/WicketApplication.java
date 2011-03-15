@@ -7,21 +7,18 @@ import org.apache.wicket.protocol.http.WebApplication;
  * 
  * @see br.com.digilabs.Start#main(String[])
  */
-public class WicketApplication extends WebApplication
-{    
+public class WicketApplication extends WebApplication {
+
     /**
      * Constructor
      */
-	public WicketApplication()
-	{
-	}
-	
-	/**
-	 * @see org.apache.wicket.Application#getHomePage()
-	 */
-	public Class<HomePage> getHomePage()
-	{
-		return HomePage.class;
-	}
+    public WicketApplication() {
+    }
 
+    /**
+     * @see org.apache.wicket.Application#getHomePage()
+     */
+    public Class<HomePage> getHomePage() {
+        return HomePage.class;
+    }
 }

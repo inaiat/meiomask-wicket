@@ -1,10 +1,13 @@
 package br.com.digilabs.meiomask.examples;
 
-import br.com.digilabs.wicket.component.meiomask.MeioMaskBehavior;
+import br.com.digilabs.wicket.component.meiomask.MeioMaskField;
 import br.com.digilabs.wicket.component.meiomask.MeioMaskType;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.CompoundPropertyModel;
 
 /**
  * Homepage
@@ -12,32 +15,35 @@ import org.apache.wicket.markup.html.form.TextField;
 public class HomePage extends WebPage {
 
     private static final long serialVersionUID = 1L;
+    private TestModel testModel = new TestModel();
 
-    // TODO Add any page properties or variables here
-    /**
-     * Constructor that is invoked when page is invoked without a session.
-     * 
-     * @param parameters
-     *            Page parameters
-     */
     public HomePage(final PageParameters parameters) {
 
+        FeedbackPanel feedbackPanel = new FeedbackPanel("feedBack");
+        add(feedbackPanel);
 
-        TextField<String> fixedMask = new TextField<String>("change-mask-input");
-        fixedMask.add(new MeioMaskBehavior(MeioMaskType.Fixed,"{mask: ':99:99:', autoTab: true}"));
-        add(fixedMask);
+        Form<TestModel> form = new Form<TestModel>("form", new CompoundPropertyModel<TestModel>(testModel)) {
 
-        TextField<String> fixedPhone = new TextField<String>("fixed-phone");
-        fixedPhone.add(MeioMaskType.FixedPhone.getBehavior());
-        add(fixedPhone);
+            @Override
+            protected void onSubmit() {
+                String temp = getModelObject().getFixedPhone();
+                info("fixed-phone: " + temp);
+                info("fixed-phone-us: " + getModelObject().getFixedPhoneUs());
 
-        TextField<String> fixedPhoneUs = new TextField<String>("fixed-phone-us");
-        fixedPhoneUs.add(MeioMaskType.FixedPhoneUs.getBehavior());
-        add(fixedPhoneUs);
+            }
+        };
 
-        TextField<String> fixedCpf = new TextField<String>("fixed-cpf");
-        fixedCpf.add(MeioMaskType.FixedCpf.getBehavior());
-        add(fixedCpf);
+        add(form);
+
+        form.add(new MeioMaskField<String>("fixed", MeioMaskType.Fixed, "{mask: ':99:99:', autoTab: true}"));
+
+        form.add(new MeioMaskField<String>("fixedPhone", MeioMaskType.FixedPhone));
+
+        form.add(new TextField<Long>("fixedPhoneUs"));
+
+        form.add(new MeioMaskField<String>("fixedCpf", MeioMaskType.FixedCpf));
+
+
 
     }
 }

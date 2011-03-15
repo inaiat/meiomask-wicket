@@ -16,7 +16,7 @@
  */
 package br.com.digilabs.wicket.component.meiomask;
 
-import br.com.digilabs.wicket.component.mootools.MootoolsCoreBehavior;
+import br.com.digilabs.wicket.component.mootools.MootoolsMoreBehavior;
 import org.apache.wicket.Component;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.Response;
@@ -29,10 +29,7 @@ import org.apache.wicket.util.string.JavascriptUtils;
  *
  * @author inaiat
  */
-public class MeioMaskBehavior extends MootoolsCoreBehavior {
-
-    private static final ResourceReference MOOTOOLS_MORE = new JavascriptResourceReference(MeioMaskBehavior.class,
-            "mootools-more-1.3.0.1.js");
+public class MeioMaskBehavior extends MootoolsMoreBehavior {
 
     private static final ResourceReference MEIO_MASK = new JavascriptResourceReference(MeioMaskBehavior.class,
             "meio-mask-min-2.0.1.js");
@@ -54,13 +51,12 @@ public class MeioMaskBehavior extends MootoolsCoreBehavior {
     @Override
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);
-        response.renderJavascriptReference(MOOTOOLS_MORE);
         response.renderJavascriptReference(MEIO_MASK);
     }
 
     @Override
     public void onComponentTag(Component component, ComponentTag tag) {
-        tag.put("data-meiomask", maskType.getMask());
+        tag.put("data-meiomask", maskType.getMaskName());
 
         if (options!=null) {
             tag.put("data-meiomask-options", options);

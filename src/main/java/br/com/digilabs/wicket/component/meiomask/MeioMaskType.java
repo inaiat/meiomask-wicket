@@ -22,34 +22,41 @@ package br.com.digilabs.wicket.component.meiomask;
  */
 public enum MeioMaskType {
 
-    Fixed("fixed"),
-    FixedPhone("fixed.phone"),
-    FixedPhoneUs("fixed.phone-us"),
-    FixedCpf("fixed.cpf"),
-    FixedCnpj("fixed.cnpj"),
-    FixedDate("fixed.date"),
-    FixedDateUs("fixed.date-us"),
-    FixedCep("fixed.cep"),
-    FixedTime("fixed.time"),
-    FixedCc("fixed.cc"),
-    ReverseInteger("reverse.integer"),
-    ReverseDecimal("reverse.decimal"),
-    ReverseDecimalUs("reverse.decimal-us"),
-    ReverseReais("reverse.reais"),
-    ReverseDollar("reverse.dollar"),
-    RegexpIp("regexp.ip"),
-    RegexpEmail("regexp.email");
+    Fixed("fixed", ""),
+    FixedPhone("fixed.phone", "(##) ####-####"),
+    FixedPhoneUs("fixed.phone-us", "(###) ###-####"),
+    FixedCpf("fixed.cpf", "###.###.###-##"),
+    FixedCnpj("fixed.cnpj", "##.###.###/####-##"),
+    FixedDate("fixed.date", "##/##/####"),
+    FixedDateUs("fixed.date-us", "##/##/####"),
+    FixedCep("fixed.cep", "#####-###"),
+    FixedTime("fixed.time", "##:##"),
+    FixedCc("fixed.cc", "#### #### #### ####"),
+    ReverseInteger("reverse.integer",""),
+    ReverseDecimal("reverse.decimal",""),
+    ReverseDecimalUs("reverse.decimal-us",""),
+    ReverseReais("reverse.reais",""),
+    ReverseDollar("reverse.dollar",""),
+    RegexpIp("regexp.ip",""),
+    RegexpEmail("regexp.email","");
+    
+    private String maskName;
     private String mask;
 
-    private MeioMaskType(String mask) {
+    private MeioMaskType(String maskName, String mask) {
+        this.maskName = maskName;
         this.mask = mask;
     }
 
+    public String getMaskName() {
+        return maskName;
+    }
+    
     public String getMask() {
         return mask;
     }
-    
-    public MeioMaskBehavior getBehavior() {
+
+    public MeioMaskBehavior ofBehavior() {
         return new MeioMaskBehavior(this);
     }
 }
