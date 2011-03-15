@@ -22,6 +22,7 @@ package br.com.digilabs.wicket.component.meiomask;
  */
 public enum MeioMaskType {
 
+    Fixed("fixed"),
     FixedPhone("fixed.phone"),
     FixedPhoneUs("fixed.phone-us"),
     FixedCpf("fixed.cpf"),
@@ -46,5 +47,9 @@ public enum MeioMaskType {
 
     public String getMask() {
         return mask;
+    }
+    
+    public MeioMaskBehavior getBehavior() {
+        return new MeioMaskBehavior(this);
     }
 }

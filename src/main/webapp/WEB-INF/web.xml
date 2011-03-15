@@ -21,7 +21,7 @@
  		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
 		<init-param>
 			<param-name>applicationClassName</param-name>
-			<param-value>br.com.digilabs.WicketApplication</param-value>
+			<param-value>br.com.digilabs.meiomask.examples.WicketApplication</param-value>
  		</init-param>
  	</filter>
 
