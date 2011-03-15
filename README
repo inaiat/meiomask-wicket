@@ -1,1 +1,25 @@
 Mootools MeioMask plugin for Apache Wicket.
+	by Inaiat Henrique - inaiat@gmail.com
+
+Notice:
+	mootools-meio-mask version 2.0.1
+	mootools-more version 1.3.0.1
+
+How To Use:
+        TextField<String> fixedMask = new TextField<String>("change-mask-input");
+        fixedMask.add(new MeioMaskBehavior(MeioMaskType.Fixed,"{mask: ':99:99:', autoTab: true}"));
+        add(fixedMask);
+
+        TextField<String> fixedPhone = new TextField<String>("fixed-phone");
+        fixedPhone.add(MeioMaskType.FixedPhone.getBehavior());
+        add(fixedPhone);
+
+        TextField<String> fixedPhoneUs = new TextField<String>("fixed-phone-us");
+        fixedPhoneUs.add(MeioMaskType.FixedPhoneUs.getBehavior());
+        add(fixedPhoneUs);
+
+        TextField<String> fixedCpf = new TextField<String>("fixed-cpf");
+        fixedCpf.add(MeioMaskType.FixedCpf.getBehavior());
+        add(fixedCpf);
+
+
