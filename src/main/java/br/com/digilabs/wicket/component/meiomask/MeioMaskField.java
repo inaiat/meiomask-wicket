@@ -16,13 +16,13 @@
 package br.com.digilabs.wicket.component.meiomask;
 
 import java.text.ParseException;
-import java.util.Locale;
 import javax.swing.text.MaskFormatter;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.util.convert.IConverter;
-import org.apache.wicket.util.convert.converters.AbstractConverter;
+import org.apache.wicket.util.convert.ConversionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -30,98 +30,85 @@ import org.apache.wicket.util.convert.converters.AbstractConverter;
  */
 public class MeioMaskField<T> extends TextField<T> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MeioMaskField.class);
     private MeioMaskType meioMaskType;
+    private final MaskFormatter maskFormatter = new MaskFormatter();
 
     public MeioMaskField(String id, MeioMaskType mask) {
         super(id);
-        init(mask,null);
+        initMaskField(mask, null);
 
     }
 
     public MeioMaskField(String id, MeioMaskType mask, IModel<T> model) {
         super(id, model);
-        init(mask,null);
+        initMaskField(mask, null);
     }
 
     public MeioMaskField(String id, MeioMaskType mask, String options) {
         super(id);
-        init(mask, options);
+        initMaskField(mask, options);
     }
 
     public MeioMaskField(String id, MeioMaskType mask, String options, IModel<T> model) {
         super(id, model);
-        init(mask, options);
-
+        initMaskField(mask, options);
     }
 
-    private void init(MeioMaskType mask, String options) {
+    public MeioMaskField(String id, MeioMaskType mask, String options, IModel<T> model, Class<T> type) {
+        super(id, model, type);
+        initMaskField(mask, options);
+    }
+
+    private void initMaskField(MeioMaskType mask, String options) {
         this.meioMaskType = mask;
-        //setType(String.class);
+        try {
+            maskFormatter.setMask(meioMaskType.getMask());
+            maskFormatter.setValueClass(String.class);
+            maskFormatter.setAllowsInvalid(true);
+            maskFormatter.setValueContainsLiteralCharacters(false);
+        } catch (ParseException parseException) {
+            throw new WicketRuntimeException(parseException);
+        }
+
         add(new MeioMaskBehavior(mask, options));
         setOutputMarkupId(true);
     }
 
     @Override
-    public IConverter getConverter(final Class<?> type) {
-        IConverter converter = null;
-        if (meioMaskType.getMask().length() > 0 && String.class.isAssignableFrom(type)) {
-            final MaskFormatter maskFormatter = new MaskFormatter();
-            try {
-                maskFormatter.setMask(meioMaskType.getMask());
-                maskFormatter.setValueClass(type);
-                maskFormatter.setAllowsInvalid(true);
-                maskFormatter.setValueContainsLiteralCharacters(false);
-            } catch (ParseException ex) {
-                throw new WicketRuntimeException(ex);
-            }
+    public String getInput() {
+        String input = super.getInput();
 
-            converter = new AbstractConverter() {
-
-                @Override
-                protected Class<?> getTargetType() {
-                    return String.class;
-                }
-
-                @Override
-                public String convertToString(Object value, Locale locale) {
-                    try {
-                        String valueToReturn = (String) maskFormatter.valueToString(value);
-                        return valueToReturn;
-                        //return super.convertToString(value, locale);
-                    } catch (ParseException ex) {
-                        throw new WicketRuntimeException(ex);
-                    }
-                }
-
-                @Override
-                public Object convertToObject(String value, Locale locale) {
-                    Object objectToReturn = null;
-                    try {
-                        objectToReturn = maskFormatter.stringToValue(value.toString());
-                        
-                    } catch (ParseException ex) {
-                        throw new WicketRuntimeException(ex);
-                    }
-                    System.out.println(">>>>>" + objectToReturn);
-                    return objectToReturn;
-                }
-            };
-
-        } else if (Number.class.isAssignableFrom(type)) {
-            converter = new MeioMaskNumberConverter(type,meioMaskType);
+        if (input.trim().length() == 0) {
+            return input;
         } else {
-            converter = super.getConverter(type);
+            try {
+                LOGGER.debug("Value to Converter {}", input);
+                return (String) maskFormatter.stringToValue(input);
+            } catch (ParseException ex) {
+                throw new ConversionException(ex);
+            }
         }
-        return converter;
     }
 
+    /**
+     * I don't know if this is a best place to convert mask (with String type), please if you
+     * find other way... talk to me
+     * @param value
+     * @return
+     * @throws ConversionException 
+     */
     @Override
-    protected void convertInput() {
-        if (getType()==null) {
-            setType(String.class);
+    protected T convertValue(String[] value) throws ConversionException {
+        if (value != null && value.length > 0 && value[0].trim().length() > 0) {
+            try {
+                String valueToConverter = value[0];
+                LOGGER.debug("Value to Converter {}", valueToConverter);
+                value[0] = (String) maskFormatter.stringToValue(valueToConverter);
+            } catch (ParseException ex) {
+                throw new ConversionException(ex);
+            }
         }
-        
-        System.out.println(">>>>>" + getType());
-        super.convertInput();
+        return super.convertValue(value);
     }
 }

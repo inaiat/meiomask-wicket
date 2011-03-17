@@ -36,9 +36,9 @@ public class HomePage extends WebPage {
         add(form);
 
         //form.add(new MeioMaskField<String>("fixed", MeioMaskType.Fixed, "{mask: ':99:99:', autoTab: true}"));
+        //form.add(new TextField<Long>("fixedPhoneUs"));
         form.add(new MeioMaskField<Long>("fixedPhoneUs", MeioMaskType.FixedPhoneUs));
         form.add(new MeioMaskField<String>("fixedPhone", MeioMaskType.FixedPhone));
-
         //form.add(new MeioMaskField<String>("fixedCpf", MeioMaskType.FixedCpf));
 
 
