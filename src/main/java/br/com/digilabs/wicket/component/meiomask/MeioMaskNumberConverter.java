@@ -5,7 +5,10 @@
 package br.com.digilabs.wicket.component.meiomask;
 
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Locale;
+import javax.swing.text.MaskFormatter;
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.util.convert.converters.AbstractNumberConverter;
 
 /**
@@ -34,7 +37,22 @@ public class MeioMaskNumberConverter extends AbstractNumberConverter {
         return type;
     }
 
-    public Object convertToObject(String string, Locale locale) {
-        return string;
+    @Override
+    public String convertToString(Object value, Locale locale) {
+        return super.convertToString(value, locale);
+    }
+
+    public Object convertToObject(String value, Locale locale) {
+        final MaskFormatter maskFormatter = new MaskFormatter();
+        try {
+            maskFormatter.setMask(meioMaskType.getMask());
+            maskFormatter.setValueClass(type);
+            maskFormatter.setAllowsInvalid(true);
+            maskFormatter.setValueContainsLiteralCharacters(false);
+        } catch (ParseException ex) {
+            throw new WicketRuntimeException(ex);
+        }
+
+        return maskFormatter.valueToString(value);
     }
 }

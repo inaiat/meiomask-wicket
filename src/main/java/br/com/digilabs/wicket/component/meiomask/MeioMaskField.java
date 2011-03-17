@@ -116,8 +116,8 @@ public class MeioMaskField<T> extends TextField<T> {
 
     @Override
     protected void convertInput() {
+        Class<?> typeClass = getType();
+        System.out.println(">>>>>" + typeClass);
         super.convertInput();
-        String input = getInput();
-        System.out.println(input);
     }
 }

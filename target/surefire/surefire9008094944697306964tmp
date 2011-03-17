@@ -1,0 +1,5 @@
+#surefire
+#Wed Mar 16 21:58:34 BRT 2011
+user.dir=/home/henrique/dev/meiomask-wicket
+localRepository=/home/henrique/.m2/repository
+basedir=/home/henrique/dev/meiomask-wicket
