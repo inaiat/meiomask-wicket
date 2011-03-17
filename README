@@ -2,8 +2,8 @@ Mootools MeioMask plugin for Apache Wicket.
 	by Inaiat Henrique - inaiat@gmail.com
 
 Notice:
-	mootools-meio-mask version 2.0.1
-	mootools-more version 1.3.0.1
+        This component is based in mootools-meio-mask plugin [https://github.com/fabiomcosta/mootools-meio-mask]
+
 
 How To Use:
     public class HomePage extends WebPage {
