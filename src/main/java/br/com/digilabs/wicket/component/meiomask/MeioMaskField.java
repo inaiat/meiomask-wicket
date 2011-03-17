@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
 public class MeioMaskField<T> extends TextField<T> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MeioMaskField.class);
-    private MaskType meioMaskType;
     private final MaskFormatter maskFormatter = new MaskFormatter();
 
     public MeioMaskField(String id, MaskType mask) {
@@ -61,9 +60,8 @@ public class MeioMaskField<T> extends TextField<T> {
     }
 
     private void initMaskField(MaskType mask, String options) {
-        this.meioMaskType = mask;
         try {
-            maskFormatter.setMask(meioMaskType.getMask());
+            maskFormatter.setMask(mask.getMask());
             maskFormatter.setValueClass(String.class);
             maskFormatter.setAllowsInvalid(true);
             maskFormatter.setValueContainsLiteralCharacters(false);
@@ -86,7 +84,7 @@ public class MeioMaskField<T> extends TextField<T> {
                 LOGGER.debug("Value to Converter {}", input);
                 return (String) maskFormatter.stringToValue(input);
             } catch (ParseException ex) {
-                throw new ConversionException(ex).setResourceKey("PatternValidator").setVariable("input", input).setVariable("pattern", maskFormatter.getMask());
+                throw newConversionException(input, ex);
             }
         }
     }
@@ -105,10 +103,17 @@ public class MeioMaskField<T> extends TextField<T> {
                 String valueToConverter = value[0];
                 LOGGER.debug("Value to Converter {}", valueToConverter);
                 value[0] = (String) maskFormatter.stringToValue(valueToConverter);
-            } catch (ParseException ex) {                
-                throw new ConversionException(ex).setResourceKey("PatternValidator").setVariable("input", value[0]).setVariable("pattern", maskFormatter.getMask());
+            } catch (ParseException ex) {    
+                throw newConversionException(value[0], ex);
             }
         }
         return super.convertValue(value);
+    }
+    
+    private ConversionException newConversionException(String value, Throwable cause) {
+        return new ConversionException(cause)
+                .setResourceKey("PatternValidator")
+                .setVariable("input", value)
+                .setVariable("pattern", maskFormatter.getMask());
     }
 }

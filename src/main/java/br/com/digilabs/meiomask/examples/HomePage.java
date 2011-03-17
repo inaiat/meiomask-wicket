@@ -8,9 +8,6 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 
-/**
- * Homepage
- */
 public class HomePage extends WebPage {
 
     private static final long serialVersionUID = 1L;
@@ -34,13 +31,8 @@ public class HomePage extends WebPage {
 
         add(form);
 
-        //form.add(new MeioMaskField<String>("fixed", MaskType.Fixed, "{mask: ':99:99:', autoTab: true}"));
-        //form.add(new TextField<Long>("fixedPhoneUs"));
         form.add(new MeioMaskField<Long>("fixedPhoneUs", MaskType.FixedPhoneUs));
         form.add(new MeioMaskField<String>("fixedPhone", MaskType.FixedPhone));
-        //form.add(new MeioMaskField<String>("fixedCpf", MaskType.FixedCpf));
-
-
 
     }
 }

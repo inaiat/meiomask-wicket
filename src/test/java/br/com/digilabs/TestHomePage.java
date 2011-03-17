@@ -19,27 +19,27 @@ public class TestHomePage extends TestCase {
     }
 
     public void testRenderMyPage() {
-        //start and render the test page
         tester.startPage(HomePage.class);
-
-        //assert rendered page class
         tester.assertRenderedPage(HomePage.class);
-
-        //assert rendered label component
-        //tester.assertLabel("message", "If you see this message wicket is properly configured and running");
     }
 
-    public void testFormOk() {
+    public void testFormValuesOK() {
         tester.startPage(HomePage.class);
         FormTester formTester = tester.newFormTester("form");
-        formTester.setValue("fixedPhoneUs", "(12) 456-7890");
+        formTester.setValue("fixedPhoneUs", "(123) 456-7890");
         formTester.setValue("fixedPhone", "(12) 3456-7890");
         formTester.submit();
-        tester.assertRenderedPage(HomePage.class);        
+        tester.assertRenderedPage(HomePage.class);
+        tester.assertNoErrorMessage();
+    }
 
-        
-
-        
-        //tester.assertInfoMessages(new String[]{"124567890","1234567890"});
+    public void testFormValuesFail() {
+        tester.startPage(HomePage.class);
+        FormTester formTester = tester.newFormTester("form");
+        formTester.setValue("fixedPhoneUs", "(23) 456-7890");
+        formTester.setValue("fixedPhone", "3456-7890");
+        formTester.submit();
+        tester.assertRenderedPage(HomePage.class);
+        tester.assertNoInfoMessage();
     }
 }

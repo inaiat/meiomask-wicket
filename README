@@ -6,31 +6,44 @@ Notice:
 	mootools-more version 1.3.0.1
 
 How To Use:
-	package br.com.digilabs.meiomask.examples;
+    package br.com.digilabs.meiomask.examples;
 
-	import br.com.digilabs.wicket.component.meiomask.MeioMaskField;
-	import br.com.digilabs.wicket.component.meiomask.MeioMaskType;
-	import org.apache.wicket.PageParameters;
-	import org.apache.wicket.markup.html.WebPage;
+    import br.com.digilabs.wicket.component.meiomask.MeioMaskField;
+    import br.com.digilabs.wicket.component.meiomask.MaskType;
+    import org.apache.wicket.PageParameters;
+    import org.apache.wicket.markup.html.WebPage;
+    import org.apache.wicket.markup.html.form.Form;
+    import org.apache.wicket.markup.html.panel.FeedbackPanel;
+    import org.apache.wicket.model.CompoundPropertyModel;
 
-	/**
-	 * Homepage
-	 */
-	public class HomePage extends WebPage {
+    public class HomePage extends WebPage {
 
-	    private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
+        private TestModel testModel = new TestModel();
 
-	    public HomePage(final PageParameters parameters) {
+        public HomePage(final PageParameters parameters) {
 
-		add(new MeioMaskField("change-mask-input",MeioMaskType.Fixed,"{mask: ':99:99:', autoTab: true}"));
+            FeedbackPanel feedbackPanel = new FeedbackPanel("feedBack");
+            add(feedbackPanel);
 
-		add(new MeioMaskField("fixed-phone",MeioMaskType.FixedPhone));
-		
-		add(new MeioMaskField("fixed-phone-us",MeioMaskType.FixedPhoneUs));
+            Form<TestModel> form = new Form<TestModel>("form", new CompoundPropertyModel<TestModel>(testModel)) {
 
-		add(new MeioMaskField("fixed-cpf",MeioMaskType.FixedCpf));
+                @Override
+                protected void onSubmit() {
+                    String temp = getModelObject().getFixedPhone();
+                    info("fixed-phone: " + temp);
+                    info("fixed-phone-us: " + getModelObject().getFixedPhoneUs());
 
-	    }
-	}
+                }
+            };
+
+            add(form);
+
+            form.add(new MeioMaskField<Long>("fixedPhoneUs", MaskType.FixedPhoneUs));
+            form.add(new MeioMaskField<String>("fixedPhone", MaskType.FixedPhone));
+
+        }
+    }
+
 
 
