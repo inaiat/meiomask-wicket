@@ -85,7 +85,7 @@ public class MeioMaskField<T> extends TextField<T> {
                 @Override
                 public String convertToString(Object value, Locale locale) {
                     try {
-                        String valueToReturn = (String) maskFormatter.stringToValue(value.toString());
+                        String valueToReturn = (String) maskFormatter.valueToString(value);
                         return valueToReturn;
                         //return super.convertToString(value, locale);
                     } catch (ParseException ex) {
@@ -95,9 +95,10 @@ public class MeioMaskField<T> extends TextField<T> {
 
                 @Override
                 public Object convertToObject(String value, Locale locale) {
-                    Object objectToReturn;
+                    Object objectToReturn = null;
                     try {
-                        objectToReturn = (String) maskFormatter.stringToValue(value.toString());
+                        objectToReturn = maskFormatter.stringToValue(value.toString());
+                        
                     } catch (ParseException ex) {
                         throw new WicketRuntimeException(ex);
                     }
@@ -107,7 +108,7 @@ public class MeioMaskField<T> extends TextField<T> {
             };
 
         } else if (Number.class.isAssignableFrom(type)) {
-            converter = new MeioMaskNumberConverter(type);
+            converter = new MeioMaskNumberConverter(type,meioMaskType);
         } else {
             converter = super.getConverter(type);
         }
@@ -116,8 +117,11 @@ public class MeioMaskField<T> extends TextField<T> {
 
     @Override
     protected void convertInput() {
-        Class<?> typeClass = getType();
-        System.out.println(">>>>>" + typeClass);
+        if (getType()==null) {
+            setType(String.class);
+        }
+        
+        System.out.println(">>>>>" + getType());
         super.convertInput();
     }
 }

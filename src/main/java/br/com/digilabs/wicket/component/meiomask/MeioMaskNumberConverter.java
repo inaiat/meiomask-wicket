@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.util.Locale;
 import javax.swing.text.MaskFormatter;
 import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.convert.converters.AbstractNumberConverter;
 
 /**
@@ -20,9 +21,23 @@ import org.apache.wicket.util.convert.converters.AbstractNumberConverter;
 public class MeioMaskNumberConverter extends AbstractNumberConverter {
 
     private final Class<?> type;
+    private final MeioMaskType maskType;
+    private final MaskFormatter maskFormatter;
 
-    public MeioMaskNumberConverter(Class<?> type) {
+    public MeioMaskNumberConverter(Class<?> type, MeioMaskType maskType) {
         this.type = type;
+        this.maskType = maskType;
+
+        try {
+            this.maskFormatter = new MaskFormatter();
+            maskFormatter.setMask(maskType.getMask());
+            maskFormatter.setValueClass(type);
+            maskFormatter.setAllowsInvalid(true);
+            maskFormatter.setValueContainsLiteralCharacters(false);
+        } catch (ParseException ex) {
+            throw new WicketRuntimeException(ex);
+        }
+
     }
 
     @Override
@@ -43,16 +58,11 @@ public class MeioMaskNumberConverter extends AbstractNumberConverter {
     }
 
     public Object convertToObject(String value, Locale locale) {
-        final MaskFormatter maskFormatter = new MaskFormatter();
         try {
-            maskFormatter.setMask(meioMaskType.getMask());
-            maskFormatter.setValueClass(type);
-            maskFormatter.setAllowsInvalid(true);
-            maskFormatter.setValueContainsLiteralCharacters(false);
+            return maskFormatter.stringToValue(value);
         } catch (ParseException ex) {
-            throw new WicketRuntimeException(ex);
+            throw new ConversionException(ex);
         }
 
-        return maskFormatter.valueToString(value);
     }
 }

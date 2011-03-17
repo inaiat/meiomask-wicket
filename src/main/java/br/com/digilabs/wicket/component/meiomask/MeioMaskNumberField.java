@@ -14,8 +14,11 @@ import org.apache.wicket.util.convert.IConverter;
  */
 public class MeioMaskNumberField<T extends Number> extends TextField<T> {
 
+    private final MeioMaskType maskType;
+    
     public MeioMaskNumberField(String id, MeioMaskType mask, IModel<T> model) {
         super(id, model);
+        this.maskType = mask;
         add(new MeioMaskBehavior(mask));
         setOutputMarkupId(true);
     }
@@ -26,6 +29,6 @@ public class MeioMaskNumberField<T extends Number> extends TextField<T> {
 
     @Override
     public IConverter getConverter(final Class<?> type) {
-        return new MeioMaskNumberConverter(type);
+        return new MeioMaskNumberConverter(type,maskType);
     }
 }
