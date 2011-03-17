@@ -1,11 +1,10 @@
 package br.com.digilabs.meiomask.examples;
 
 import br.com.digilabs.wicket.component.meiomask.MeioMaskField;
-import br.com.digilabs.wicket.component.meiomask.MeioMaskType;
+import br.com.digilabs.wicket.component.meiomask.MaskType;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 
@@ -35,11 +34,11 @@ public class HomePage extends WebPage {
 
         add(form);
 
-        //form.add(new MeioMaskField<String>("fixed", MeioMaskType.Fixed, "{mask: ':99:99:', autoTab: true}"));
+        //form.add(new MeioMaskField<String>("fixed", MaskType.Fixed, "{mask: ':99:99:', autoTab: true}"));
         //form.add(new TextField<Long>("fixedPhoneUs"));
-        form.add(new MeioMaskField<Long>("fixedPhoneUs", MeioMaskType.FixedPhoneUs));
-        form.add(new MeioMaskField<String>("fixedPhone", MeioMaskType.FixedPhone));
-        //form.add(new MeioMaskField<String>("fixedCpf", MeioMaskType.FixedCpf));
+        form.add(new MeioMaskField<Long>("fixedPhoneUs", MaskType.FixedPhoneUs));
+        form.add(new MeioMaskField<String>("fixedPhone", MaskType.FixedPhone));
+        //form.add(new MeioMaskField<String>("fixedCpf", MaskType.FixedCpf));
 
 
 

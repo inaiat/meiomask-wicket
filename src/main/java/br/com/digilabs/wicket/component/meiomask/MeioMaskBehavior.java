@@ -35,15 +35,15 @@ public class MeioMaskBehavior extends MootoolsMoreBehavior {
             "meio-mask-min-2.0.1.js");
 
     
-    private final MeioMaskType maskType;
+    private final MaskType maskType;
     private final String options;
 
 
-    public MeioMaskBehavior(MeioMaskType type) {
+    public MeioMaskBehavior(MaskType type) {
         this(type, null);
     }
 
-    public MeioMaskBehavior(MeioMaskType type, String options) {
+    public MeioMaskBehavior(MaskType type, String options) {
         this.maskType = type;
         this.options = options;
     }

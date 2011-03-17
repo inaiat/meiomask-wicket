@@ -31,36 +31,36 @@ import org.slf4j.LoggerFactory;
 public class MeioMaskField<T> extends TextField<T> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MeioMaskField.class);
-    private MeioMaskType meioMaskType;
+    private MaskType meioMaskType;
     private final MaskFormatter maskFormatter = new MaskFormatter();
 
-    public MeioMaskField(String id, MeioMaskType mask) {
+    public MeioMaskField(String id, MaskType mask) {
         super(id);
         initMaskField(mask, null);
 
     }
 
-    public MeioMaskField(String id, MeioMaskType mask, IModel<T> model) {
+    public MeioMaskField(String id, MaskType mask, IModel<T> model) {
         super(id, model);
         initMaskField(mask, null);
     }
 
-    public MeioMaskField(String id, MeioMaskType mask, String options) {
+    public MeioMaskField(String id, MaskType mask, String options) {
         super(id);
         initMaskField(mask, options);
     }
 
-    public MeioMaskField(String id, MeioMaskType mask, String options, IModel<T> model) {
+    public MeioMaskField(String id, MaskType mask, String options, IModel<T> model) {
         super(id, model);
         initMaskField(mask, options);
     }
 
-    public MeioMaskField(String id, MeioMaskType mask, String options, IModel<T> model, Class<T> type) {
+    public MeioMaskField(String id, MaskType mask, String options, IModel<T> model, Class<T> type) {
         super(id, model, type);
         initMaskField(mask, options);
     }
 
-    private void initMaskField(MeioMaskType mask, String options) {
+    private void initMaskField(MaskType mask, String options) {
         this.meioMaskType = mask;
         try {
             maskFormatter.setMask(meioMaskType.getMask());
@@ -86,7 +86,7 @@ public class MeioMaskField<T> extends TextField<T> {
                 LOGGER.debug("Value to Converter {}", input);
                 return (String) maskFormatter.stringToValue(input);
             } catch (ParseException ex) {
-                throw new ConversionException(ex);
+                throw new ConversionException(ex).setResourceKey("PatternValidator").setVariable("input", input).setVariable("pattern", maskFormatter.getMask());
             }
         }
     }
@@ -105,8 +105,8 @@ public class MeioMaskField<T> extends TextField<T> {
                 String valueToConverter = value[0];
                 LOGGER.debug("Value to Converter {}", valueToConverter);
                 value[0] = (String) maskFormatter.stringToValue(valueToConverter);
-            } catch (ParseException ex) {
-                throw new ConversionException(ex);
+            } catch (ParseException ex) {                
+                throw new ConversionException(ex).setResourceKey("PatternValidator").setVariable("input", value[0]).setVariable("pattern", maskFormatter.getMask());
             }
         }
         return super.convertValue(value);
