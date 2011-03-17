@@ -22,8 +22,7 @@ public class HomePage extends WebPage {
 
             @Override
             protected void onSubmit() {
-                String temp = getModelObject().getFixedPhone();
-                info("fixed-phone: " + temp);
+                info("fixed-phone: " + getModelObject().getFixedPhone());
                 info("fixed-phone-us: " + getModelObject().getFixedPhoneUs());
 
             }
